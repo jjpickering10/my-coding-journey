@@ -8,13 +8,15 @@ const Wall = ({
   meshPosition,
 }) => {
   return (
-    <mesh
-      position={position}
-      geometry={boxGeometry}
-      material={wallMaterial}
-      scale={scale}
-      castShadow
-    />
+    <group position={position}>
+      <mesh
+        position={meshPosition}
+        geometry={boxGeometry}
+        material={wallMaterial}
+        scale={scale}
+        castShadow
+      />
+    </group>
   );
 };
 

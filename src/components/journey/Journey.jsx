@@ -6,6 +6,7 @@ import Section from './Section';
 import sectionData from '../../data/sectionData';
 import Room from './Room';
 import Wall from './Wall';
+import Obstacle from './Obstacle';
 
 THREE.ColorManagement.legacyMode = false;
 
@@ -18,12 +19,13 @@ const roomSectionMaterial = new THREE.MeshStandardMaterial({
   color: '#703434',
 });
 
-const width = 10;
+const depth = 10;
+const width = 0.3;
 const scaleValue = 24;
 const wallScaleValue = 5;
-const scale = [scaleValue, 0.2, width];
-const wallScale = [0.3, wallScaleValue, width];
-const frontWallScale = [scaleValue, wallScaleValue, 0.3];
+const scale = [scaleValue, 0.2, depth];
+const wallScale = [width, wallScaleValue, depth];
+const frontWallScale = [scaleValue, wallScaleValue, width];
 const meshPosition = [0, -0.1, 0];
 
 const Journey = () => {
@@ -32,24 +34,26 @@ const Journey = () => {
       <>
         <Section
           key={index}
-          position={[0, 0, (index + 1) * width]}
+          position={[0, 0, (index + 1) * depth]}
           boxGeometry={boxGeometry}
           floorMaterial={floorSectionMaterial}
           scale={scale}
           meshPosition={meshPosition}
           heading={section.heading}
+          obstacles={section.languages.length}
+          index={index}
         />
         <Wall
           key={index + 'sideWall'}
           position={[
             index % 2 === 0
-              ? scaleValue * 2 - scaleValue / 2
-              : -scaleValue * 2 + scaleValue / 2,
+              ? scaleValue * 2 - scaleValue / 2 - width / 2
+              : -scaleValue * 2 + scaleValue / 2 + width / 2,
             wallScaleValue / 2,
-            (index + 1) * width,
+            (index + 1) * depth,
           ]}
           boxGeometry={boxGeometry}
-          floorMaterial={roomSectionMaterial}
+          wallMaterial={roomSectionMaterial}
           scale={wallScale}
           meshPosition={meshPosition}
         />
@@ -58,10 +62,10 @@ const Journey = () => {
           position={[
             index % 2 === 0 ? scaleValue : -scaleValue,
             wallScaleValue / 2,
-            (index + 1) * width + width / 2,
+            (index + 1) * depth + depth / 2,
           ]}
           boxGeometry={boxGeometry}
-          floorMaterial={roomSectionMaterial}
+          wallMaterial={roomSectionMaterial}
           scale={frontWallScale}
           meshPosition={meshPosition}
         />
@@ -70,10 +74,10 @@ const Journey = () => {
           position={[
             index % 2 === 0 ? scaleValue : -scaleValue,
             wallScaleValue / 2,
-            (index + 1) * width - width / 2,
+            (index + 1) * depth - depth / 2,
           ]}
           boxGeometry={boxGeometry}
-          floorMaterial={roomSectionMaterial}
+          wallMaterial={roomSectionMaterial}
           scale={frontWallScale}
           meshPosition={meshPosition}
         />
@@ -82,7 +86,7 @@ const Journey = () => {
           position={[
             index % 2 === 0 ? scaleValue : -scaleValue,
             0,
-            (index + 1) * width,
+            (index + 1) * depth,
           ]}
           boxGeometry={boxGeometry}
           floorMaterial={roomSectionMaterial}
@@ -92,12 +96,14 @@ const Journey = () => {
         <Wall
           key={index + 'wall'}
           position={[
-            index % 2 === 0 ? -scaleValue / 2 : scaleValue / 2,
+            index % 2 === 0
+              ? -scaleValue / 2 - width / 2
+              : scaleValue / 2 + width / 2,
             wallScaleValue / 2,
-            (index + 1) * width,
+            (index + 1) * depth,
           ]}
           boxGeometry={boxGeometry}
-          floorMaterial={roomSectionMaterial}
+          wallMaterial={roomSectionMaterial}
           scale={wallScale}
           meshPosition={meshPosition}
         />
@@ -115,30 +121,30 @@ const Journey = () => {
       />
       {sections}
       <End
-        position={[0, 0, sectionData.length * width + width]}
+        position={[0, 0, sectionData.length * depth + depth]}
         boxGeometry={boxGeometry}
         floorMaterial={floorMaterial}
         scale={scale}
         meshPosition={meshPosition}
       />
       <Wall
-        position={[0, wallScaleValue / 2, -width / 2]}
+        position={[0, wallScaleValue / 2, -depth / 2 + width / 2]}
         boxGeometry={boxGeometry}
-        floorMaterial={roomSectionMaterial}
+        wallMaterial={roomSectionMaterial}
         scale={frontWallScale}
         meshPosition={meshPosition}
       />
       <Wall
-        position={[scaleValue / 2, wallScaleValue / 2, 0]}
+        position={[scaleValue / 2 + width / 2, wallScaleValue / 2, 0]}
         boxGeometry={boxGeometry}
-        floorMaterial={roomSectionMaterial}
+        wallMaterial={roomSectionMaterial}
         scale={wallScale}
         meshPosition={meshPosition}
       />
       <Wall
-        position={[-scaleValue / 2, wallScaleValue / 2, 0]}
+        position={[-scaleValue / 2 - width / 2, wallScaleValue / 2, 0]}
         boxGeometry={boxGeometry}
-        floorMaterial={roomSectionMaterial}
+        wallMaterial={roomSectionMaterial}
         scale={wallScale}
         meshPosition={meshPosition}
       />
