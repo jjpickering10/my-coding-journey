@@ -10,6 +10,7 @@ const Experience = () => {
     <>
       <Canvas>
         <OrbitControls makeDefault />
+        <color args={['#252731']} attach={'background'} />
         <Lights />
         <Physics>
           <Journey />
