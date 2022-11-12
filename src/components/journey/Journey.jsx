@@ -19,9 +19,9 @@ const roomSectionMaterial = new THREE.MeshStandardMaterial({
   color: '#703434',
 });
 
-const depth = 10;
+const depth = 20;
 const width = 0.3;
-const scaleValue = 24;
+const scaleValue = 48;
 const wallScaleValue = 5;
 const scale = [scaleValue, 0.2, depth];
 const wallScale = [width, wallScaleValue, depth];
@@ -40,7 +40,8 @@ const Journey = () => {
           scale={scale}
           meshPosition={meshPosition}
           heading={section.heading}
-          obstacles={section.languages.length}
+          obstacles={section.languages}
+          obstaclesLength={section.languages.length}
           index={index}
         />
         <Wall

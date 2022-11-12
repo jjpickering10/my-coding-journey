@@ -1,6 +1,7 @@
 import { Text } from '@react-three/drei';
 import React from 'react';
 import Obstacle from './Obstacle';
+import SectionImage from './SectionImage';
 
 const Section = ({
   position = [0, 0, 4],
@@ -10,9 +11,11 @@ const Section = ({
   meshPosition,
   heading,
   obstacles,
+  obstaclesLength,
+  index,
 }) => {
   const obstaclesArray = [];
-  for (let i = 0; i < obstacles; i++) {
+  for (let i = 0; i < obstaclesLength; i++) {
     obstaclesArray.push(
       <Obstacle
         key={i + 'obstacle'}
@@ -20,31 +23,45 @@ const Section = ({
         material={floorMaterial}
         scale={[1, 1, 1]}
         position={[
-          meshPosition[0] + (i % 2) === 0
-            ? i * (10 / obstacles) + 10 / obstacles - 1
-            : i * -(10 / obstacles) + 10 / obstacles - 1,
-          meshPosition[1] + 0.5,
-          meshPosition[2] + (Math.random() - 0.5) * 5,
+          meshPosition[0] -
+            2.5 +
+            (index % 2 === 0 ? -17 : 17) +
+            (Math.random() - 0.5) * 5,
+          // meshPosition[0] + (i % 2) === 0
+          //   ? i * (10 / obstaclesLength) +
+          //     10 / obstaclesLength -
+          //     10 / obstaclesLength
+          //   : i * -(10 / obstaclesLength) +
+          //     10 / obstaclesLength -
+          //     10 / obstaclesLength,
+          meshPosition[1],
+          // meshPosition[2] + (Math.random() - 0.5) * 5,
+          meshPosition[2] + 10,
         ]}
         rotation={Math.random()}
+        text={obstacles[i]}
+        index={index}
       />
     );
   }
   return (
-    <group position={position}>
-      <Text scale={15} position={[0, 5, meshPosition[2] + 2.5]}>
-        {heading}
-        <meshBasicMaterial toneMapped={false} color={'#ffffff'} />
-      </Text>
-      <mesh
-        position={meshPosition}
-        receiveShadow
-        geometry={boxGeometry}
-        material={floorMaterial}
-        scale={scale}
-      />
-      {obstaclesArray}
-    </group>
+    <>
+      <group position={position}>
+        <Text scale={15} position={[0, 5, meshPosition[2] + 2.5]}>
+          {heading}
+          <meshBasicMaterial toneMapped={false} color={'#ffffff'} />
+        </Text>
+        <mesh
+          position={meshPosition}
+          receiveShadow
+          geometry={boxGeometry}
+          material={floorMaterial}
+          scale={scale}
+        />
+        <SectionImage />
+        <group>{obstaclesArray}</group>
+      </group>
+    </>
   );
 };
 

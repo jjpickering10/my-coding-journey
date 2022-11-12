@@ -1,55 +1,39 @@
 const sectionData = [
   {
     heading: 'Citrus Funk',
-    languages: ['HTML', 'CSS'],
+    languages: ['CSS'],
   },
   {
     heading: 'Poker Quiz',
-    languages: ['HTML', 'CSS', 'JS'],
+    languages: ['JS'],
   },
   {
     heading: 'Coastal Catch',
-    languages: ['HTML', 'CSS', 'JS', 'FLASK'],
+    languages: ['FLASK'],
   },
   {
     heading: 'Dragon Egg',
-    languages: ['HTML', 'CSS', 'JS', 'DJANGO', '', ''],
+    languages: ['DJANGO'],
   },
   {
     heading: 'MHHD',
-    languages: ['HTML', 'CSS', 'JS', ''],
+    languages: ['THREE.JS'],
   },
   {
     heading: 'Music Band',
-    languages: ['HTML', 'CSS', 'JS', '', '', ''],
+    languages: ['WEBGL'],
   },
   {
     heading: 'Daisy',
-    languages: ['HTML', 'CSS', 'JS', '', ''],
+    languages: ['REACT'],
   },
   {
     heading: 'Photography',
-    languages: ['HTML', 'CSS', 'JS', ''],
+    languages: ['R3F'],
   },
   {
     heading: 'Frontend Mentor',
-    languages: [
-      'HTML',
-      'CSS',
-      'JS',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-    ],
+    languages: ['TAILWINDCSS'],
   },
 ];
 
