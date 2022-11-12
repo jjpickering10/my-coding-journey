@@ -1,7 +1,6 @@
 import React from 'react';
 
 const SectionImage = ({ image }) => {
-  console.log(image);
   return (
     <>
       <mesh
