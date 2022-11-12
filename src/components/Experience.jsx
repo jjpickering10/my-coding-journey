@@ -17,8 +17,8 @@ const Experience = () => {
     position: {
       value: {
         x: 0,
-        y: 0,
-        z: 0,
+        y: 5,
+        z: 18,
       },
       step: 1,
     },
@@ -69,7 +69,7 @@ const Experience = () => {
           <color args={['#252731']} attach={'background'} />
           <Lights />
           <Physics>
-            <Debug />
+            {/* <Debug /> */}
             <Journey />
             <Movement />
           </Physics>

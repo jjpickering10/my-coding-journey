@@ -20,7 +20,7 @@ const roomSectionMaterial = new THREE.MeshStandardMaterial({
   color: '#703434',
 });
 
-const depth = 20;
+const depth = 40;
 const width = 0.3;
 const scaleValue = 48;
 const wallScaleValue = 5;
