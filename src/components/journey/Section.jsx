@@ -1,4 +1,4 @@
-import { Text } from '@react-three/drei';
+import { Text, useTexture } from '@react-three/drei';
 import React from 'react';
 import Obstacle from './Obstacle';
 import SectionImage from './SectionImage';
@@ -13,7 +13,9 @@ const Section = ({
   obstacles,
   obstaclesLength,
   index,
+  image,
 }) => {
+  const sectionImage = useTexture(image);
   const obstaclesArray = [];
   for (let i = 0; i < obstaclesLength; i++) {
     obstaclesArray.push(
@@ -47,9 +49,13 @@ const Section = ({
   return (
     <>
       <group position={position}>
-        <Text scale={15} position={[0, 5, meshPosition[2] + 2.5]}>
+        <Text scale={15} position={[0, 10, meshPosition[2] + 2.5]}>
           {heading}
-          <meshBasicMaterial toneMapped={false} color={'#ffffff'} />
+          <meshBasicMaterial
+            toneMapped={false}
+            color={'#ffffff'}
+            opacity={0.25}
+          />
         </Text>
         <mesh
           position={meshPosition}
@@ -58,7 +64,7 @@ const Section = ({
           material={floorMaterial}
           scale={scale}
         />
-        <SectionImage />
+        <SectionImage image={sectionImage} />
         <group>{obstaclesArray}</group>
       </group>
     </>

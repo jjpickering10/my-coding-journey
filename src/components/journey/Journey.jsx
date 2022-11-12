@@ -43,6 +43,7 @@ const Journey = () => {
           obstacles={section.languages}
           obstaclesLength={section.languages.length}
           index={index}
+          image={section.image}
         />
         <Wall
           key={index + 'sideWall'}

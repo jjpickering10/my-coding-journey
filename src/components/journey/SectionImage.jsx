@@ -1,6 +1,7 @@
 import React from 'react';
 
-const SectionImage = () => {
+const SectionImage = ({ image }) => {
+  console.log(image);
   return (
     <>
       <mesh
@@ -11,7 +12,7 @@ const SectionImage = () => {
         // scale={scale}
       >
         <planeGeometry args={[10 * 2.03389831, 10]} />
-        <meshStandardMaterial />
+        <meshStandardMaterial map={image} />
       </mesh>
     </>
   );
