@@ -47,6 +47,14 @@ const Experience = () => {
             name: 'left',
             keys: ['ArrowLeft', 'KeyA'],
           },
+          {
+            name: 'leftRotate',
+            keys: ['KeyZ'],
+          },
+          {
+            name: 'rightRotate',
+            keys: ['KeyX'],
+          },
         ]}
       >
         <Canvas shadows>
@@ -69,7 +77,7 @@ const Experience = () => {
           <color args={['#252731']} attach={'background'} />
           <Lights />
           <Physics>
-            {/* <Debug /> */}
+            <Debug />
             <Journey />
             <Movement />
           </Physics>

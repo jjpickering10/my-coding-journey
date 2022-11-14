@@ -67,8 +67,9 @@ const Section = ({
             scale={scale}
           />
         </RigidBody>
+
         <SectionImage image={sectionImage} />
-        <group>{obstaclesArray}</group>
+        {obstaclesArray}
       </group>
     </>
   );

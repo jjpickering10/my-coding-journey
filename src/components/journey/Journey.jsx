@@ -46,56 +46,64 @@ const Journey = () => {
           index={index}
           image={section.image}
         />
-        <Wall
-          key={index + 'sideWall'}
-          position={[
-            index % 2 === 0
-              ? scaleValue * 2 - scaleValue / 2 - width / 2
-              : -scaleValue * 2 + scaleValue / 2 + width / 2,
-            wallScaleValue / 2,
-            -(index + 1) * depth,
-          ]}
-          boxGeometry={boxGeometry}
-          wallMaterial={roomSectionMaterial}
-          scale={wallScale}
-          meshPosition={meshPosition}
-        />
-        <Wall
-          key={index + 'frontWall'}
-          position={[
-            index % 2 === 0 ? scaleValue : -scaleValue,
-            wallScaleValue / 2,
-            -(index + 1) * depth + depth / 2,
-          ]}
-          boxGeometry={boxGeometry}
-          wallMaterial={roomSectionMaterial}
-          scale={frontWallScale}
-          meshPosition={meshPosition}
-        />
-        <Wall
-          key={index + 'backWall'}
-          position={[
-            index % 2 === 0 ? scaleValue : -scaleValue,
-            wallScaleValue / 2,
-            -(index + 1) * depth - depth / 2,
-          ]}
-          boxGeometry={boxGeometry}
-          wallMaterial={roomSectionMaterial}
-          scale={frontWallScale}
-          meshPosition={meshPosition}
-        />
-        <Room
-          key={index + 'room'}
-          position={[
-            index % 2 === 0 ? scaleValue : -scaleValue,
-            0,
-            -(index + 1) * depth,
-          ]}
-          boxGeometry={boxGeometry}
-          floorMaterial={roomSectionMaterial}
-          scale={scale}
-          meshPosition={meshPosition}
-        />
+        <RigidBody type={'fixed'}>
+          <Wall
+            key={index + 'sideWall'}
+            position={[
+              index % 2 === 0
+                ? scaleValue * 2 - scaleValue / 2 - width / 2
+                : -scaleValue * 2 + scaleValue / 2 + width / 2,
+              wallScaleValue / 2,
+              -(index + 1) * depth,
+            ]}
+            boxGeometry={boxGeometry}
+            wallMaterial={roomSectionMaterial}
+            scale={wallScale}
+            meshPosition={meshPosition}
+          />
+        </RigidBody>
+        <RigidBody type={'fixed'}>
+          <Wall
+            key={index + 'frontWall'}
+            position={[
+              index % 2 === 0 ? scaleValue : -scaleValue,
+              wallScaleValue / 2,
+              -(index + 1) * depth + depth / 2,
+            ]}
+            boxGeometry={boxGeometry}
+            wallMaterial={roomSectionMaterial}
+            scale={frontWallScale}
+            meshPosition={meshPosition}
+          />
+        </RigidBody>
+        <RigidBody type={'fixed'}>
+          <Wall
+            key={index + 'backWall'}
+            position={[
+              index % 2 === 0 ? scaleValue : -scaleValue,
+              wallScaleValue / 2,
+              -(index + 1) * depth - depth / 2,
+            ]}
+            boxGeometry={boxGeometry}
+            wallMaterial={roomSectionMaterial}
+            scale={frontWallScale}
+            meshPosition={meshPosition}
+          />
+        </RigidBody>
+        <RigidBody type={'fixed'}>
+          <Room
+            key={index + 'room'}
+            position={[
+              index % 2 === 0 ? scaleValue : -scaleValue,
+              0,
+              -(index + 1) * depth,
+            ]}
+            boxGeometry={boxGeometry}
+            floorMaterial={roomSectionMaterial}
+            scale={scale}
+            meshPosition={meshPosition}
+          />
+        </RigidBody>
         <RigidBody type={'fixed'}>
           <Wall
             key={index + 'wall'}
@@ -127,46 +135,54 @@ const Journey = () => {
         />
       </RigidBody>
       {sections}
-      <End
-        position={[0, 0, -sectionData.length * depth - depth]}
-        boxGeometry={boxGeometry}
-        floorMaterial={floorMaterial}
-        scale={scale}
-        meshPosition={meshPosition}
-      />
-      <Wall
-        position={[
-          0,
-          wallScaleValue / 2,
-          -depth / 2 + width / 2 - sectionData.length * depth - depth,
-        ]}
-        boxGeometry={boxGeometry}
-        wallMaterial={roomSectionMaterial}
-        scale={frontWallScale}
-        meshPosition={meshPosition}
-      />
-      <Wall
-        position={[
-          scaleValue / 2 + width / 2,
-          wallScaleValue / 2,
-          -sectionData.length * depth - depth,
-        ]}
-        boxGeometry={boxGeometry}
-        wallMaterial={roomSectionMaterial}
-        scale={wallScale}
-        meshPosition={meshPosition}
-      />
-      <Wall
-        position={[
-          -scaleValue / 2 - width / 2,
-          wallScaleValue / 2,
-          -sectionData.length * depth - depth,
-        ]}
-        boxGeometry={boxGeometry}
-        wallMaterial={roomSectionMaterial}
-        scale={wallScale}
-        meshPosition={meshPosition}
-      />
+      <RigidBody type={'fixed'} restitution={0.2} friction={0}>
+        <End
+          position={[0, 0, -sectionData.length * depth - depth]}
+          boxGeometry={boxGeometry}
+          floorMaterial={floorMaterial}
+          scale={scale}
+          meshPosition={meshPosition}
+        />
+      </RigidBody>
+      <RigidBody type={'fixed'} restitution={0.2} friction={0}>
+        <Wall
+          position={[
+            0,
+            wallScaleValue / 2,
+            -depth / 2 + width / 2 - sectionData.length * depth - depth,
+          ]}
+          boxGeometry={boxGeometry}
+          wallMaterial={roomSectionMaterial}
+          scale={frontWallScale}
+          meshPosition={meshPosition}
+        />
+      </RigidBody>
+      <RigidBody type={'fixed'} restitution={0.2} friction={0}>
+        <Wall
+          position={[
+            scaleValue / 2 + width / 2,
+            wallScaleValue / 2,
+            -sectionData.length * depth - depth,
+          ]}
+          boxGeometry={boxGeometry}
+          wallMaterial={roomSectionMaterial}
+          scale={wallScale}
+          meshPosition={meshPosition}
+        />
+      </RigidBody>
+      <RigidBody type={'fixed'} restitution={0.2} friction={0}>
+        <Wall
+          position={[
+            -scaleValue / 2 - width / 2,
+            wallScaleValue / 2,
+            -sectionData.length * depth - depth,
+          ]}
+          boxGeometry={boxGeometry}
+          wallMaterial={roomSectionMaterial}
+          scale={wallScale}
+          meshPosition={meshPosition}
+        />
+      </RigidBody>
     </>
   );
 };

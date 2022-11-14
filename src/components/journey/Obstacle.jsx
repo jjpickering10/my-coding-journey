@@ -1,6 +1,8 @@
 import { Center, Text3D, useMatcapTexture } from '@react-three/drei';
-import React from 'react';
+import { CuboidCollider, RigidBody, useRapier } from '@react-three/rapier';
+import React, { useEffect, useRef } from 'react';
 import font from 'three/examples/fonts/helvetiker_bold.typeface.json';
+import * as THREE from 'three';
 
 const Obstacle = ({
   position,
@@ -12,6 +14,26 @@ const Obstacle = ({
   index,
 }) => {
   const [matcapTexture] = useMatcapTexture('0A0A0A_A9A9A9_525252_747474', 256);
+  const ref = useRef();
+  const cuboidRef = useRef();
+  const { rapier } = useRapier();
+  useEffect(() => {
+    if (ref.current && cuboidRef.current[0]) {
+      ref.current.geometry.computeBoundingBox();
+      ref.current.geometry.translate(
+        -ref.current.geometry.boundingBox.max.x / 2,
+        0,
+        0
+      );
+      const x = new rapier.Cuboid(
+        ref.current.geometry.boundingBox.max.x,
+        ref.current.geometry.boundingBox.max.y,
+        ref.current.geometry.boundingBox.max.z
+      );
+      cuboidRef.current[0].setShape(x);
+      console.log(cuboidRef.current[0].shape);
+    }
+  });
   return (
     // <mesh
     //   geometry={geometry}
@@ -22,32 +44,40 @@ const Obstacle = ({
     //   castShadow
     //   receiveShadow
     // />
-    // <Center
-    //   right={index % 2 === 0 ? false : true}
-    //   left={index % 2 === 0 ? true : false}
-    //   top
-    // >
-    <Text3D
-      letterSpacing={-0.2}
-      position={position}
+    <RigidBody
       rotation-y={index % 2 === 0 ? Math.PI / 3 : -Math.PI / 3}
-      castshadow
-      receiveShadow
-      font={font}
-      material={material}
-      size={2.5}
-      curveSegments={12}
-      bevelEnabled
-      bevelThickness={0.5}
-      bevelSize={0.15}
-      bevelSegments={16}
-      bevelOffset={0}
+      position={[position[0], position[1], position[2]]}
+      type='fixed'
+      colliders={false}
+      restitution={1}
+      friction={10}
     >
-      {text}
-      {/* <meshStandardMaterial matcap={matcapTexture} /> */}
-      {/* <meshMatcapMaterial matcap={matcapTexture} /> */}
-    </Text3D>
-    // </Center>
+      <CuboidCollider
+        // position={[position[0], position[1], position[2]]}
+        ref={cuboidRef}
+        args={[1, 0.5, 2]}
+      />
+      <Text3D
+        ref={ref}
+        letterSpacing={-0.2}
+        castshadow
+        receiveShadow
+        font={font}
+        material={material}
+        size={2.5}
+        name={'text'}
+        curveSegments={12}
+        bevelEnabled
+        bevelThickness={0.5}
+        bevelSize={0.15}
+        bevelSegments={16}
+        bevelOffset={0}
+      >
+        {text}
+        {/* <meshStandardMaterial matcap={matcapTexture} /> */}
+        {/* <meshMatcapMaterial matcap={matcapTexture} /> */}
+      </Text3D>
+    </RigidBody>
   );
 };
 
