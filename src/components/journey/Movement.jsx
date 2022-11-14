@@ -16,7 +16,7 @@ const Movement = () => {
     const { up, down, right, left, leftRotate, rightRotate } = getKeys();
     const impulse = { x: 0, y: 0, z: 0 };
 
-    const impulseStrength = 10 * delta;
+    const impulseStrength = 20 * delta;
 
     if (leftRotate) {
       setRotationY((prevRotation) => (prevRotation += impulseStrength * 0.1));

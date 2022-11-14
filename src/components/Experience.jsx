@@ -57,16 +57,16 @@ const Experience = () => {
           },
         ]}
       >
-        <Canvas shadows>
-          {/* <Canvas
-        shadows
-        camera={{
-          fov: 45,
-          near: 0.1,
-          far: 1000,
-          position: [position.x, position.y, position.z],
-        }}
-      > */}
+        {/* <Canvas shadows> */}
+        <Canvas
+          shadows
+          // camera={{
+          //   fov: 45,
+          //   near: 0.1,
+          //   far: 1000,
+          //   position: [position.x, position.y, position.z],
+          // }}
+        >
           <PerspectiveCamera
             makeDefault
             // position={[0, 2, 12.5]}

@@ -13,46 +13,55 @@ const sectionData = [
     heading: 'Citrus Funk',
     languages: ['CSS'],
     image: citrusFunk,
+    roomImages: [{}, {}, {}, {}, {}],
   },
   {
     heading: 'Poker Quiz',
     languages: ['JS'],
     image: pokerQuiz,
+    roomImages: [{}, {}, {}, {}, {}],
   },
   {
     heading: 'Coastal Catch',
     languages: ['FLASK'],
     image: coastalCatch,
+    roomImages: [{}, {}, {}, {}, {}],
   },
   {
     heading: 'Dragon Egg',
     languages: ['DJANGO'],
     image: dragonEgg,
+    roomImages: [{}, {}, {}, {}, {}],
   },
   {
     heading: 'MHHD',
     languages: ['THREE.JS'],
     image: mhhd,
+    roomImages: [{}, {}, {}, {}, {}],
   },
   {
     heading: 'Music Band',
     languages: ['WEBGL'],
     image: musicBand,
+    roomImages: [{}, {}, {}, {}, {}],
   },
   {
     heading: 'Daisy',
     languages: ['REACT'],
     image: daisy,
+    roomImages: [{}, {}, {}, {}, {}],
   },
   {
     heading: 'Photography',
     languages: ['R3F'],
     image: photography,
+    roomImages: [{}, {}, {}, {}, {}],
   },
   {
     heading: 'Frontend Mentor',
     languages: ['TAILWINDCSS'],
     image: frontendMentor,
+    roomImages: [{}, {}, {}, {}, {}],
   },
 ];
 

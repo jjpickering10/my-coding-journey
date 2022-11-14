@@ -22,7 +22,7 @@ const roomSectionMaterial = new THREE.MeshStandardMaterial({
 
 const depth = 40;
 const width = 0.3;
-const scaleValue = 48;
+const scaleValue = 96;
 const wallScaleValue = 5;
 const scale = [scaleValue, 0.2, depth];
 const wallScale = [width, wallScaleValue, depth];
@@ -102,6 +102,8 @@ const Journey = () => {
             floorMaterial={roomSectionMaterial}
             scale={scale}
             meshPosition={meshPosition}
+            roomImages={section.roomImages}
+            left={index % 2 === 0 ? true : false}
           />
         </RigidBody>
         <RigidBody type={'fixed'}>
