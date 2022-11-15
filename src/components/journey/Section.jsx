@@ -1,4 +1,4 @@
-import { Text, useTexture } from '@react-three/drei';
+import { Edges, Text, useTexture } from '@react-three/drei';
 import { RigidBody } from '@react-three/rapier';
 import React from 'react';
 import Obstacle from './Obstacle';
@@ -8,6 +8,7 @@ const Section = ({
   position = [0, 0, 4],
   boxGeometry,
   floorMaterial,
+  textMaterial,
   scale,
   meshPosition,
   heading,
@@ -23,7 +24,7 @@ const Section = ({
       <Obstacle
         key={i + 'obstacle'}
         geometry={boxGeometry}
-        material={floorMaterial}
+        material={textMaterial}
         scale={[1, 1, 1]}
         position={[
           meshPosition[0] -
@@ -61,6 +62,7 @@ const Section = ({
         <RigidBody type={'fixed'}>
           <mesh
             position={meshPosition}
+            castShadow
             receiveShadow
             geometry={boxGeometry}
             material={floorMaterial}
@@ -68,7 +70,7 @@ const Section = ({
           />
         </RigidBody>
 
-        <SectionImage image={sectionImage} />
+        <SectionImage image={sectionImage} index={index} />
         {obstaclesArray}
       </group>
     </>

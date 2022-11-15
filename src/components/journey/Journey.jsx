@@ -11,19 +11,68 @@ import { RigidBody } from '@react-three/rapier';
 
 THREE.ColorManagement.legacyMode = false;
 
-const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-const floorMaterial = new THREE.MeshStandardMaterial({ color: '#111111' });
+const boxGeometry = new THREE.BoxGeometry(1, 1, 1, 64, 64, 64);
+const floorMaterial = new THREE.MeshStandardMaterial({ color: '#000000' });
+// const floorMaterial = new THREE.MeshStandardMaterial({
+//   color: '#111111',
+// });
+const textMaterial = new THREE.MeshStandardMaterial({
+  color: '#3d3d3d',
+  // color: '#ffffff',
+  // opacity: 0.1,
+  // color: '#703434',
+  // wireframe: true,
+  opacity: 1,
+  transparent: true,
+  roughness: 0.2,
+  metalness: 0.8,
+});
 const floorSectionMaterial = new THREE.MeshStandardMaterial({
-  color: '#222222',
+  color: '#3d3d3d',
+  // opacity: 1,
+  // color: '#703434',
+  // wireframe: true,
+  // opacity: 1,
+  // transparent: true,
+  // roughness: 0.2,
+  // metalness: 1,
+  opacity: 1,
+  transparent: true,
+  roughness: 0,
+  metalness: 0.8,
 });
 const roomSectionMaterial = new THREE.MeshStandardMaterial({
-  color: '#703434',
+  // // color: '#cecece',
+  // color: '#111111',
+  // // color: '#703434',
+  // opacity: 0.8,
+  // transparent: true,
+  // roughness: 0,
+  // metalness: 1,
+
+  color: '#3d3d3d',
+  // // opacity: 1,
+  // // color: '#703434',
+  // // wireframe: true,
+  // // opacity: 1,
+  // transparent: true,
+  // // roughness: 0.2,
+  // // metalness: 1,
+  // opacity: 1,
+  // transparent: true,
+  // roughness: 0.2,
+  // metalness: 0.8,
+
+  opacity: 1,
+  transparent: true,
+  roughness: 0,
+  metalness: 0.8,
 });
 
-const depth = 40;
+const depth = 60;
 const width = 0.3;
 const scaleValue = 96;
-const wallScaleValue = 5;
+const wallScaleValue = 100;
 const scale = [scaleValue, 0.2, depth];
 const wallScale = [width, wallScaleValue, depth];
 const frontWallScale = [scaleValue, wallScaleValue, width];
@@ -38,6 +87,7 @@ const Journey = () => {
           position={[0, 0, -(index + 1) * depth]}
           boxGeometry={boxGeometry}
           floorMaterial={floorSectionMaterial}
+          textMaterial={textMaterial}
           scale={scale}
           meshPosition={meshPosition}
           heading={section.heading}

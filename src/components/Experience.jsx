@@ -1,7 +1,10 @@
 import {
+  Cloud,
   KeyboardControls,
   OrbitControls,
   PerspectiveCamera,
+  Sky,
+  Stars,
 } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Debug, Physics } from '@react-three/rapier';
@@ -74,10 +77,11 @@ const Experience = () => {
           />
           {/* <OrbitControls makeDefault /> */}
           {/* <color args={[controls.color]} attach={'background'} /> */}
-          <color args={['#252731']} attach={'background'} />
+          <color args={['#111111']} attach={'background'} />
           <Lights />
+
           <Physics>
-            <Debug />
+            {/* <Debug /> */}
             <Journey />
             <Movement />
           </Physics>

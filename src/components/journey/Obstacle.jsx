@@ -31,7 +31,6 @@ const Obstacle = ({
         ref.current.geometry.boundingBox.max.z
       );
       cuboidRef.current[0].setShape(x);
-      console.log(cuboidRef.current[0].shape);
     }
   });
   return (
@@ -60,15 +59,15 @@ const Obstacle = ({
       <Text3D
         ref={ref}
         letterSpacing={-0.2}
-        castshadow
-        receiveShadow
+        // castshadow
+        // receiveShadow
         font={font}
         material={material}
-        size={2.5}
+        size={5}
         name={'text'}
         curveSegments={12}
         bevelEnabled
-        bevelThickness={0.5}
+        bevelThickness={1}
         bevelSize={0.15}
         bevelSegments={16}
         bevelOffset={0}

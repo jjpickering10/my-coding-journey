@@ -66,10 +66,11 @@ const Movement = () => {
     // Control the camera
 
     const movementPosition = movementBall.current.translation();
+    console.log(movementPosition);
     const cameraPosition = new THREE.Vector3();
     cameraPosition.copy(movementPosition);
     cameraPosition.z += 0;
-    cameraPosition.y += 2.5;
+    cameraPosition.y += 0;
 
     const cameraTarget = new THREE.Vector3();
     cameraTarget.copy(movementPosition);

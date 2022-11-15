@@ -2,8 +2,7 @@ import { RigidBody } from '@react-three/rapier';
 import React from 'react';
 import * as THREE from 'three';
 
-const RoomImage = ({ index, left }) => {
-  console.log(index);
+const RoomImage = ({ index, left, image }) => {
   return (
     <RigidBody restitution={0.2} friction={2}>
       <mesh
@@ -14,12 +13,9 @@ const RoomImage = ({ index, left }) => {
         }
         rotation-y={index === 4 ? (left ? -Math.PI / 2 : Math.PI / 2) : 0}
         receiveShadow
-        // geometry={boxGeometry}
-        // material={floorMaterial}
-        // scale={scale}
       >
         <planeGeometry args={[10 * 2.03389831, 10]} />
-        <meshStandardMaterial side={THREE.DoubleSide} />
+        <meshStandardMaterial map={image} side={THREE.DoubleSide} />
       </mesh>
     </RigidBody>
   );

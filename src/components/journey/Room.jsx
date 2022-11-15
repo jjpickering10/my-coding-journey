@@ -1,3 +1,4 @@
+import { useTexture } from '@react-three/drei';
 import React from 'react';
 import RoomImage from './RoomImage';
 
@@ -10,9 +11,9 @@ const Room = ({
   roomImages,
   left,
 }) => {
-  console.log(left);
   const roomPlanes = roomImages.map((image, index) => {
-    return <RoomImage index={index} left={left} />;
+    const roomImage = useTexture(image.image);
+    return <RoomImage image={roomImage} index={index} left={left} />;
   });
   return (
     <>
