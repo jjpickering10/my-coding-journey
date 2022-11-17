@@ -8,10 +8,23 @@ import Room from './Room';
 import Wall from './Wall';
 import Obstacle from './Obstacle';
 import { RigidBody } from '@react-three/rapier';
+import { useTexture } from '@react-three/drei';
+import SectionImage from './SectionImage';
+import MovementImage from './MovementImage';
 
 THREE.ColorManagement.legacyMode = false;
 
+const depth = 60;
+const width = 0.3;
+const scaleValue = 122;
+const wallScaleValue = 100;
+const scale = [scaleValue, 0.2, depth];
+const wallScale = [width, wallScaleValue, depth];
+const frontWallScale = [scaleValue, wallScaleValue, width];
+const meshPosition = [0, -0.1, 0];
+
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1, 64, 64, 64);
+const planeGeometry = new THREE.PlaneGeometry(1, 1, 64, 64);
 const floorMaterial = new THREE.MeshStandardMaterial({ color: '#000000' });
 // const floorMaterial = new THREE.MeshStandardMaterial({
 //   color: '#111111',
@@ -29,39 +42,13 @@ const textMaterial = new THREE.MeshStandardMaterial({
 });
 const floorSectionMaterial = new THREE.MeshStandardMaterial({
   color: '#3d3d3d',
-  // opacity: 1,
-  // color: '#703434',
-  // wireframe: true,
-  // opacity: 1,
-  // transparent: true,
-  // roughness: 0.2,
-  // metalness: 1,
-  opacity: 1,
+  opacity: 0.95,
   transparent: true,
-  roughness: 0,
+  roughness: 0.2,
   metalness: 0.8,
 });
 const roomSectionMaterial = new THREE.MeshStandardMaterial({
-  // // color: '#cecece',
-  // color: '#111111',
-  // // color: '#703434',
-  // opacity: 0.8,
-  // transparent: true,
-  // roughness: 0,
-  // metalness: 1,
-
   color: '#3d3d3d',
-  // // opacity: 1,
-  // // color: '#703434',
-  // // wireframe: true,
-  // // opacity: 1,
-  // transparent: true,
-  // // roughness: 0.2,
-  // // metalness: 1,
-  // opacity: 1,
-  // transparent: true,
-  // roughness: 0.2,
-  // metalness: 0.8,
 
   opacity: 1,
   transparent: true,
@@ -69,23 +56,20 @@ const roomSectionMaterial = new THREE.MeshStandardMaterial({
   metalness: 0.8,
 });
 
-const depth = 60;
-const width = 0.3;
-const scaleValue = 96;
-const wallScaleValue = 100;
-const scale = [scaleValue, 0.2, depth];
-const wallScale = [width, wallScaleValue, depth];
-const frontWallScale = [scaleValue, wallScaleValue, width];
-const meshPosition = [0, -0.1, 0];
-
 const Journey = () => {
+  console.log('journey');
+  const sectionImages = sectionData.map((section) => {
+    const texture = useTexture(section.image);
+    texture.name = section.heading;
+    return texture;
+  });
   const sections = sectionData.map((section, index) => {
     return (
       <>
         <Section
-          key={index}
+          key={index + 'section'}
           position={[0, 0, -(index + 1) * depth]}
-          boxGeometry={boxGeometry}
+          boxGeometry={planeGeometry}
           floorMaterial={floorSectionMaterial}
           textMaterial={textMaterial}
           scale={scale}
@@ -94,7 +78,7 @@ const Journey = () => {
           obstacles={section.languages}
           obstaclesLength={section.languages.length}
           index={index}
-          image={section.image}
+          image={sectionImages[index]}
         />
         <RigidBody type={'fixed'}>
           <Wall
@@ -235,6 +219,7 @@ const Journey = () => {
           meshPosition={meshPosition}
         />
       </RigidBody>
+      <MovementImage images={sectionImages} index={0} />
     </>
   );
 };

@@ -4,11 +4,18 @@ import { RigidBody } from '@react-three/rapier';
 import React, { useRef, useState } from 'react';
 import * as THREE from 'three';
 import gsap from 'gsap';
+import useJourney from '../../stores/useJourney';
 
 const Movement = () => {
+  const setNewPosition = useJourney((state) => state.setPosition);
+  const currentSection = useJourney((state) => state.section);
   const movementBall = useRef();
   const [subscribeKeys, getKeys] = useKeyboardControls();
   const [rotationY, setRotationY] = useState(0);
+
+  const moving = () => {
+    setNewPosition(movementBall.current.translation().z);
+  };
 
   useFrame((state, delta) => {
     // Control the movement
@@ -66,11 +73,11 @@ const Movement = () => {
     // Control the camera
 
     const movementPosition = movementBall.current.translation();
-    console.log(movementPosition);
+    // console.log(movementPosition);
     const cameraPosition = new THREE.Vector3();
     cameraPosition.copy(movementPosition);
     cameraPosition.z += 0;
-    cameraPosition.y += 0;
+    cameraPosition.y += 2;
 
     const cameraTarget = new THREE.Vector3();
     cameraTarget.copy(movementPosition);
@@ -81,6 +88,8 @@ const Movement = () => {
     state.camera.matrix.setPosition(cameraPosition);
     state.camera.position.copy(cameraPosition);
     state.camera.lookAt(cameraTarget);
+    moving();
+    // console.log(currentSection);
   });
   return (
     <RigidBody

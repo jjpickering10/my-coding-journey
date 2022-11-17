@@ -13,7 +13,9 @@ const Room = ({
 }) => {
   const roomPlanes = roomImages.map((image, index) => {
     const roomImage = useTexture(image.image);
-    return <RoomImage image={roomImage} index={index} left={left} />;
+    return (
+      <RoomImage key={index} image={roomImage} index={index} left={left} />
+    );
   });
   return (
     <>

@@ -1,8 +1,11 @@
 import { Edges, Text, useTexture } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
 import { RigidBody } from '@react-three/rapier';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import useJourney from '../../stores/useJourney';
 import Obstacle from './Obstacle';
 import SectionImage from './SectionImage';
+import * as THREE from 'three';
 
 const Section = ({
   position = [0, 0, 4],
@@ -17,7 +20,10 @@ const Section = ({
   index,
   image,
 }) => {
-  const sectionImage = useTexture(image);
+  // const sectionImage = useTexture(image);
+  const updateSection = useJourney((state) => state.setSection);
+  const updateTexture = useJourney((state) => state.setTexture);
+  const floorRef = useRef();
   const obstaclesArray = [];
   for (let i = 0; i < obstaclesLength; i++) {
     obstaclesArray.push(
@@ -48,6 +54,13 @@ const Section = ({
       />
     );
   }
+
+  const setSectionImage = () => {
+    // console.log('setting section');
+    updateSection(heading);
+    updateTexture(index);
+  };
+
   return (
     <>
       <group position={position}>
@@ -59,18 +72,26 @@ const Section = ({
             opacity={0.25}
           />
         </Text>
-        <RigidBody type={'fixed'}>
+        <RigidBody onCollisionEnter={setSectionImage} type={'fixed'}>
           <mesh
+            ref={floorRef}
             position={meshPosition}
             castShadow
             receiveShadow
+            rotation-x={-Math.PI / 2}
             geometry={boxGeometry}
             material={floorMaterial}
-            scale={scale}
-          />
+            scale={[122, 60, 1]}
+          >
+            {/* <meshBasicMaterial
+              attach={'material'}
+              map={image}
+              side={THREE.DoubleSide}
+            /> */}
+          </mesh>
         </RigidBody>
 
-        <SectionImage image={sectionImage} index={index} />
+        <SectionImage image={image} index={index} />
         {obstaclesArray}
       </group>
     </>
