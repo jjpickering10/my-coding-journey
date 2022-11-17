@@ -12,7 +12,7 @@ import { useControls } from 'leva';
 
 const SectionImage = ({ image, index }) => {
   const MyShader = shaderMaterial(
-    { uTime: 0, uTexture0: null, uIndex: 0, uProgress: 0.1 },
+    { uTime: 0, uTexture0: null, uIndex: 0, uProgress: 1 },
     // vertex shader
     glsl`
 #define PI 3.1415926535897932384626433832795
@@ -25,18 +25,10 @@ uniform float uProgress;
 void main() {
 	vUv = uv;
 	vec3 newPos = position;
-  float dist = length(uProgress - vUv.y) * -1.;
+  float dist = length(uProgress - length(vUv.y - 1.)) * -1.;
   newPos.z = (sin(dist * PI * 2.) * 5.) * uProgress * 0.1;
+  newPos.y += (sin(uTime * uIndex) * 0.25);
 
-  // -------
-
-
-	// float freq = 1.5;
-	// float amp = 1.25;
-	// vec3 noisePos = vec3(newPos.x , newPos.y, newPos.z + PI * 0.02);
-	// newPos.z += snoise3(noisePos) * sin(uTime);
-	// float waves = sin(vUv.y * 5. * (1.));
-    // newPos.x -= sin(dist * PI + PI / 2. + waves + uTime) * ((1.) * (10. * (1. - (2.))));
 	gl_Position = projectionMatrix * modelViewMatrix * vec4( newPos, 1.0 );
 }
   `,
@@ -54,7 +46,12 @@ uniform sampler2D uTexture0;
 // uniform sampler2D uTexture8;
 // uniform float uCurrentIndex;
 uniform float uTime;
+#pragma glslify: vignette = require(glsl-vignette/advanced);
 void main() {
+
+  float square = smoothstep(0.495, 0.5, max(abs(vUv.x - 0.5), abs(vUv.y - 0.5)));
+
+  float vignetteValue = vignette(vUv, vec2(0.25, 0.5), 1., 0.99);
 
 	float dist = 1. - length(0.5 - vUv);
 	
@@ -62,7 +59,9 @@ void main() {
 	// vec4 texture1 = texture2D(uTexture1, vUv);
 	// vec4 final = mix(texture0, texture1, uCurrentIndex);
 	// gl_FragColor = texture0;
-	gl_FragColor = texture0 * pow(dist, 0.2);
+  
+	gl_FragColor = texture0 * vignetteValue;
+	// gl_FragColor = vec4(vec3(texture0.r, texture0.g, texture0.b), (1. - pow(square, 10.)));
 }
   `
   );
@@ -95,7 +94,7 @@ void main() {
         duration: 2,
       });
       tl.current.to(meshRef.current.material.uniforms.uProgress, {
-        value: 0.1,
+        value: 1,
         duration: 2,
       });
     });
