@@ -1,8 +1,9 @@
 import { shaderMaterial, useTexture } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { RigidBody } from '@react-three/rapier';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import * as THREE from 'three';
+import gsap from 'gsap';
 import { vertex, fragment } from '../../shaders/shader';
 import useJourney from '../../stores/useJourney';
 import { extend } from '@react-three/fiber';
@@ -11,24 +12,21 @@ import { useControls } from 'leva';
 
 const SectionImage = ({ image, index }) => {
   const MyShader = shaderMaterial(
-    { uTime: 0, uTexture0: null, uIndex: 0 },
+    { uTime: 0, uTexture0: null, uIndex: 0, uProgress: 0.1 },
     // vertex shader
     glsl`
 #define PI 3.1415926535897932384626433832795
 varying vec2 vUv;
 uniform float uTime;
 uniform float uIndex;
+uniform float uProgress;
 
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d);
 void main() {
 	vUv = uv;
 	vec3 newPos = position;
-
-   // -------
-	newPos.y += sin(uTime * uIndex) * 0.5;
-	newPos.y += sin(vUv.x * PI) * 2.5;
-	newPos.z -= sin(uTime * uIndex) * 0.5;
-	newPos.z += sin(vUv.y * PI) * 2.5;
+  float dist = length(uProgress - vUv.y) * -1.;
+  newPos.z = (sin(dist * PI * 2.) * 5.) * uProgress * 0.1;
 
   // -------
 
@@ -37,7 +35,6 @@ void main() {
 	// float amp = 1.25;
 	// vec3 noisePos = vec3(newPos.x , newPos.y, newPos.z + PI * 0.02);
 	// newPos.z += snoise3(noisePos) * sin(uTime);
-	// float dist = length(0.5 - vUv);
 	// float waves = sin(vUv.y * 5. * (1.));
     // newPos.x -= sin(dist * PI + PI / 2. + waves + uTime) * ((1.) * (10. * (1. - (2.))));
 	gl_Position = projectionMatrix * modelViewMatrix * vec4( newPos, 1.0 );
@@ -59,29 +56,20 @@ uniform sampler2D uTexture0;
 uniform float uTime;
 void main() {
 
-	float dist = 1. - length(0.1 - vUv);
+	float dist = 1. - length(0.5 - vUv);
 	
 	vec4 texture0 = texture2D(uTexture0, vUv);
 	// vec4 texture1 = texture2D(uTexture1, vUv);
 	// vec4 final = mix(texture0, texture1, uCurrentIndex);
-	gl_FragColor = texture0;
-	// gl_FragColor = final * pow(dist, 0.2);
+	// gl_FragColor = texture0;
+	gl_FragColor = texture0 * pow(dist, 0.2);
 }
   `
   );
 
   extend({ MyShader });
-  console.log(index);
-  // const { rotation } = useControls({
-  //   rotation: {
-  //     value: {
-  //       x: -1.1,
-  //       y: 5,
-  //       z: 18,
-  //     },
-  //     step: 0.01,
-  //   },
-  // });
+
+  const currentSection = useJourney((state) => state.texture);
 
   const movementBall = useRef();
   const ref = useRef();
@@ -95,20 +83,35 @@ void main() {
     // console.log(ref.current.uniforms.uTime.value);
   }, []);
 
+  const tl = useRef();
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      tl.current = gsap.timeline({
+        paused: true,
+      });
+      tl.current.to(meshRef.current.material.uniforms.uProgress, {
+        value: 2,
+        duration: 2,
+      });
+      tl.current.to(meshRef.current.material.uniforms.uProgress, {
+        value: 0.1,
+        duration: 2,
+      });
+    });
+    if (currentSection === index) {
+      tl.current.play();
+    }
+
+    return () => ctx.revert();
+  }, [currentSection]);
+
   return (
     <>
       {/* <RigidBody restitution={0.2} friction={2}> */}
-      <mesh
-        ref={meshRef}
-        position={[0, 15, -20]}
-        // rotation-x={-1.1}
-        receiveShadow
-        // geometry={boxGeometry}
-        // material={floorMaterial}
-        // scale={scale}
-      >
+      <mesh ref={meshRef} position={[0, 15, -20]} receiveShadow>
         <planeGeometry args={[20 * 2.03389831, 20, 64, 64]} />
-        {/* <meshStandardMaterial map={image} /> */}
+
         <myShader
           attach={'material'}
           ref={ref}
@@ -117,8 +120,7 @@ void main() {
           uIndex={index % 2 === 0 ? 1 : 2}
         />
       </mesh>
-      {/* </RigidBody> */}
-      {/* <RigidBody type='fixed' restitution={0.2} friction={2}> */}
+
       <mesh
         ref={meshRef2}
         position={[0, 15, -20.001]}
@@ -126,7 +128,6 @@ void main() {
         receiveShadow
       >
         <planeGeometry args={[20 * 2.03389831, 20]} />
-        {/* <meshStandardMaterial map={image} /> */}
         <myShader
           attach={'material'}
           ref={ref2}
@@ -135,7 +136,6 @@ void main() {
           uIndex={index % 2 === 0 ? 1 : 2}
         />
       </mesh>
-      {/* </RigidBody> */}
     </>
   );
 };

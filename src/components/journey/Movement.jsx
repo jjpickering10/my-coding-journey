@@ -73,7 +73,6 @@ const Movement = () => {
     // Control the camera
 
     const movementPosition = movementBall.current.translation();
-    // console.log(movementPosition);
     const cameraPosition = new THREE.Vector3();
     cameraPosition.copy(movementPosition);
     cameraPosition.z += 0;
@@ -89,7 +88,6 @@ const Movement = () => {
     state.camera.position.copy(cameraPosition);
     state.camera.lookAt(cameraTarget);
     moving();
-    // console.log(currentSection);
   });
   return (
     <RigidBody

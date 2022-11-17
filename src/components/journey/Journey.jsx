@@ -26,15 +26,8 @@ const meshPosition = [0, -0.1, 0];
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1, 64, 64, 64);
 const planeGeometry = new THREE.PlaneGeometry(1, 1, 64, 64);
 const floorMaterial = new THREE.MeshStandardMaterial({ color: '#000000' });
-// const floorMaterial = new THREE.MeshStandardMaterial({
-//   color: '#111111',
-// });
 const textMaterial = new THREE.MeshStandardMaterial({
   color: '#3d3d3d',
-  // color: '#ffffff',
-  // opacity: 0.1,
-  // color: '#703434',
-  // wireframe: true,
   opacity: 1,
   transparent: true,
   roughness: 0.2,
@@ -165,7 +158,7 @@ const Journey = () => {
         <Start
           position={[0, 0, 0]}
           boxGeometry={boxGeometry}
-          floorMaterial={floorMaterial}
+          floorMaterial={floorSectionMaterial}
           scale={scale}
           meshPosition={meshPosition}
         />
@@ -175,7 +168,7 @@ const Journey = () => {
         <End
           position={[0, 0, -sectionData.length * depth - depth]}
           boxGeometry={boxGeometry}
-          floorMaterial={floorMaterial}
+          floorMaterial={floorSectionMaterial}
           scale={scale}
           meshPosition={meshPosition}
         />

@@ -37,15 +37,7 @@ const Section = ({
             2.5 +
             (index % 2 === 0 ? -17 : 17) +
             (Math.random() - 0.5) * 5,
-          // meshPosition[0] + (i % 2) === 0
-          //   ? i * (10 / obstaclesLength) +
-          //     10 / obstaclesLength -
-          //     10 / obstaclesLength
-          //   : i * -(10 / obstaclesLength) +
-          //     10 / obstaclesLength -
-          //     10 / obstaclesLength,
           meshPosition[1],
-          // meshPosition[2] + (Math.random() - 0.5) * 5,
           meshPosition[2] + 10,
         ]}
         rotation={Math.random()}
@@ -56,7 +48,6 @@ const Section = ({
   }
 
   const setSectionImage = () => {
-    // console.log('setting section');
     updateSection(heading);
     updateTexture(index);
   };
