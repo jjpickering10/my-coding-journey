@@ -14,7 +14,7 @@ import MovementImage from './MovementImage';
 
 THREE.ColorManagement.legacyMode = false;
 
-const depth = 60;
+const depth = 80;
 const width = 0.3;
 const scaleValue = 122;
 const wallScaleValue = 100;

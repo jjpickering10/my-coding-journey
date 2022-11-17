@@ -108,7 +108,7 @@ void main() {
   return (
     <>
       {/* <RigidBody restitution={0.2} friction={2}> */}
-      <mesh ref={meshRef} position={[0, 15, -20]} receiveShadow>
+      <mesh ref={meshRef} position={[0, 15, -40]} receiveShadow>
         <planeGeometry args={[20 * 2.03389831, 20, 64, 64]} />
 
         <myShader
@@ -122,7 +122,7 @@ void main() {
 
       <mesh
         ref={meshRef2}
-        position={[0, 15, -20.001]}
+        position={[0, 15, -40.001]}
         rotation-y={Math.PI}
         receiveShadow
       >

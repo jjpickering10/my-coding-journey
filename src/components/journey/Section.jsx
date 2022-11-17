@@ -72,7 +72,7 @@ const Section = ({
             rotation-x={-Math.PI / 2}
             geometry={boxGeometry}
             material={floorMaterial}
-            scale={[122, 60, 1]}
+            scale={[122, 80, 1]}
           >
             {/* <meshBasicMaterial
               attach={'material'}
